@@ -1,8 +1,9 @@
-import React, {  useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import React, {  useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
-import Results from '../results/Results'
-import AgentSelect from './AgentSelect';
+import Results from '../results/Results';
+import Spinner from '../utility/Spinner';
+
 
 export default function Search() {
     const [searchKey, setSearchKey] = useState('agent_id');
@@ -12,11 +13,12 @@ export default function Search() {
 
         queryKey: ['policies'],
         queryFn: () =>
-            fetch(`http://localhost:8080/policies/${searchKey}/${searchInput}`).then(
+            fetch(`http://localhost:8080/policies/${searchKey}=${searchInput}`).then(
             (res) => res.json(),
             ),
         enabled: false,
-    })
+    });
+    
 
     const { isLoading: isLoadingAgents, error, data: agents, refetch: refetchAgents } = useQuery({
 
@@ -25,13 +27,16 @@ export default function Search() {
             fetch(`http://localhost:8080/agents`).then(
             (res) => res.json(),
             ),
-    })
-
-
-
+    });
 
     const handleSearchKeyChange = (e) => {
-        setSearchKey(e.target.value)
+        setSearchKey(e.target.value);
+    }
+
+    const handleInputChange = async (e) => {
+        await setSearchInput(e.target.value);
+        refetchPolicies();
+        
     }
 
 
@@ -43,9 +48,8 @@ export default function Search() {
                 <p>Search by:</p>
                 <select className='w-30 h-10' onChange={(e) => handleSearchKeyChange(e)}>
                     <option value="agent_id">Agent</option>
-                    <option value="assured_id">Assured</option>
+                    <option value="assured_name">Assured</option>
                     <option value="policy_number">Policy No.</option>
-                    <option value="bill_number">Bill No.</option>
                     <option value="plate_number">Plate No.</option>
                     <option value="chassis_number">Chassis No.</option>
                     <option value="engine_number">Engine No.</option>
@@ -54,19 +58,14 @@ export default function Search() {
 
 
                 {(searchKey == 'agent_id') ? 
-                <select onChange={(e) => {
-                    setSearchInput(e.target.value)
-                    setTimeout(function () {
-                        refetchPolicies()
-                    },100)
-                }}>
+                <select onChange={e => handleInputChange(e)}>
                     <option value="" selected disabled hidden>Select Agent</option>
                     {agents?.map(agent => {
-                        return <option key={agent.id} value={agent.id}>{agent.first_name + ' ' + agent.last_name}</option>
+                        return <option key={agent.id} value={agent.id}>{agent.first_name + ' ' + agent.last_name}</option>;
                     })}
                 </select>
                 : 
-                <input type="text" />}
+                <input type="text" onChange={e => handleInputChange(e)}/>}
             </div>
             <Results className="flex bg-amber-300 w-full" policies={policies} searchKey={searchKey}/>
         </div>

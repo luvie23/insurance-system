@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import { Link } from 'react-router-dom'
 
 export default function ResultItem(props) {
     const [policy, setPolicy] = useState({})
@@ -33,7 +34,7 @@ export default function ResultItem(props) {
                 {policy.total_premium}
             </td>
             <td class="px-6 py-4">
-                {policy.address}
+                <Link to={`/policy/${policy.policy_number}`}>Show Policy</Link>
             </td>
         </tr>
   )

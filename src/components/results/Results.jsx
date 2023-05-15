@@ -38,7 +38,7 @@ export default function Results(props) {
                             Total Premium
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            ADdress
+                            Actions
                         </th>
                     </tr>
                 </thead>
