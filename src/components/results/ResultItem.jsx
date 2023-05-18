@@ -11,7 +11,7 @@ export default function ResultItem(props) {
 
 
   return (
-        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+        <tr class="bg-neutral-200 border-b dark:bg-gray-800 dark:border-gray-700">
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {policy.first_name + ' ' + policy.last_name}
             </th>
@@ -34,7 +34,7 @@ export default function ResultItem(props) {
                 {policy.total_premium}
             </td>
             <td class="px-6 py-4">
-                <Link to={`/policy/${policy.policy_number}`}>Show Policy</Link>
+                <Link to={`/policy/${policy.policy_number}`} class="text-blue-900">Show Policy</Link>
             </td>
         </tr>
   )

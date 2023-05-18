@@ -12,11 +12,11 @@ export default function Results(props) {
 
     return (
 
-        <div class="relative overflow-x-auto">
+        <div class="overflow-auto w-screen">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
+                    <tr className=''>
+                        <th scope="col" class="px-6 py-3 ">
                             Assured's Name
                         </th>
                         <th scope="col" class="px-6 py-3">

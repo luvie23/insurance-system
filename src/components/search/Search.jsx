@@ -2,7 +2,6 @@ import React, {  useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import Results from '../results/Results';
-import Spinner from '../utility/Spinner';
 
 
 export default function Search() {
@@ -39,12 +38,10 @@ export default function Search() {
         
     }
 
-
-
     return (
         
         <div className='flex flex-col w-full items-center '>
-            <div className='flex flex-col my-10 w-60 h-36 bg-slate-300 items-center justify-center rounded-lg space-y-2'>
+            <div className='flex flex-col my-10 w-60 h-36 bg-neutral-400 items-center justify-center rounded-lg space-y-2'>
                 <p>Search by:</p>
                 <select className='w-30 h-10' onChange={(e) => handleSearchKeyChange(e)}>
                     <option value="agent_id">Agent</option>
