@@ -46,7 +46,7 @@ export default function NewPolicy() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const response = await fetch('http://localhost:8080/create_policy', {
+            const response = await fetch('https://insurance-backend-server.fly.dev/create_policy', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -93,7 +93,7 @@ export default function NewPolicy() {
     const { isLoading: isLoadingAgents, error, data: agents, refetch: refetchAgents } = useQuery({
         queryKey: ['agents'],
         queryFn: () =>
-            fetch(`http://localhost:8080/agents`).then(
+            fetch(`https://insurance-backend-server.fly.dev/agents`).then(
             (res) => res.json(),
             ),
     });

@@ -12,7 +12,7 @@ export default function Search() {
 
         queryKey: ['policies'],
         queryFn: () =>
-            fetch(`http://localhost:8080/policies/${searchKey}=${searchInput}`).then(
+            fetch(`https://insurance-backend-server.fly.dev/policies/${searchKey}=${searchInput}`).then(
             (res) => res.json(),
             ),
         enabled: false,
@@ -23,7 +23,7 @@ export default function Search() {
 
         queryKey: ['agents'],
         queryFn: () =>
-            fetch(`http://localhost:8080/agents`).then(
+            fetch(`https://insurance-backend-server.fly.dev/agents`).then(
             (res) => res.json(),
             ),
     });

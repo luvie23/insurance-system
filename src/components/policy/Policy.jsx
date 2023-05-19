@@ -12,7 +12,7 @@ export default function Policy() {
 
         queryKey: ['policy'],
         queryFn: () =>
-            fetch(`http://localhost:8080/policy/${policyNumber}`).then(
+            fetch(`https://insurance-backend-server.fly.dev/policy/${policyNumber}`).then(
             (res) => res.json(),
             ),
 
@@ -22,7 +22,7 @@ export default function Policy() {
 
         queryKey: ['notes'],
         queryFn: () =>
-            fetch(`http://localhost:8080/notes/${policyNumber}`).then(
+            fetch(`https://insurance-backend-server.fly.dev/notes/${policyNumber}`).then(
             (res) => res.json(),
             ),
 
