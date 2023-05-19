@@ -35,7 +35,6 @@ export default function Search() {
     const handleInputChange = async (e) => {
         await setSearchInput(e.target.value);
         refetchPolicies();
-        
     }
 
     return (

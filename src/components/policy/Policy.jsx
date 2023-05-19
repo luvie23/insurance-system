@@ -18,13 +18,28 @@ export default function Policy() {
 
     });
 
+    const { isLoading: isLoadingNotes, error: errorNotes, data: notes} = useQuery({
+
+        queryKey: ['notes'],
+        queryFn: () =>
+            fetch(`http://localhost:8080/notes/${policyNumber}`).then(
+            (res) => res.json(),
+            ),
+
+    });
+
     if (isLoadingPolicy){
         return <Spinner/>
     }
-    console.log(policy[0])
+
+    if (isLoadingNotes){
+        return <Spinner/>
+    }
+
+    console.log(notes)
   return (
-<div class="flex flex-col justify-center items-center h-[100vh]">
-            <div class="relative flex flex-col items-center rounded-[20px] w-[700px] max-w-[95%] mx-auto bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none p-3">
+    <div class="flex justify-center items-center h-[100vh] space-x-10">
+            <div class="relative flex flex-col items-center rounded-[20px] w-[700px] max-w-[95%] bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:text-white dark:!shadow-none p-3">
                 <div class="mt-2 mb-8 w-full">
                     <h4 class="px-2 text-xl font-bold text-navy-700 dark:text-white">
                     { policy[0].first_name + ' ' +  policy[0].last_name + ' | ' + policy[0].policy_number  }
@@ -98,7 +113,19 @@ export default function Policy() {
                     </div>
                 </div>
             </div>  
-            <p class="font-normal text-navy-700 mt-20 mx-auto w-max">test</p>  
+            <div className='flex flex-col mt-10 space-y-4 h-1/3 w-1/2 overflow-auto bg-amber-300 rounded-md p-4'>
+                <h4 className="text-xl font-bold text-navy-700 dark:text-white flex p-4">NOTES</h4>
+
+                {notes.map(note => {
+                    return  <div className='p-6 bg-gray-100 rounded-lg'>
+                                <div className='flex space-x-4 items-center'>
+                                    <h4 className="text-xl font-bold text-navy-700 dark:text-white flex">{note.title}</h4>
+                                    <p>{moment(note.created_at).format('MMMM Do YYYY, h:mm:ss a')}</p>
+                                </div>
+                                <p className=''>{note.content}</p>
+                            </div>
+                })}
+            </div>
         </div>
   )
 }
