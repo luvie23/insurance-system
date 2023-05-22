@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { useQuery } from '@tanstack/react-query';
 
+const URI = 'http://localhost:8080';
 
 export default function NewPolicy() {
     const [ownDamagePremium, setOwnDamagePremium] = useState(0)
@@ -46,7 +47,7 @@ export default function NewPolicy() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const response = await fetch('https://insurance-backend-server.fly.dev/create_policy', {
+            const response = await fetch(`${URI}/create_policy'`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -93,7 +94,7 @@ export default function NewPolicy() {
     const { isLoading: isLoadingAgents, error, data: agents, refetch: refetchAgents } = useQuery({
         queryKey: ['agents'],
         queryFn: () =>
-            fetch(`https://insurance-backend-server.fly.dev/agents`).then(
+            fetch(`${URI}/agents`).then(
             (res) => res.json(),
             ),
     });

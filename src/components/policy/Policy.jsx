@@ -5,6 +5,9 @@ import moment from 'moment';
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../utility/Spinner';
 
+const URI = 'http://localhost:8080';
+
+
 export default function Policy() {
     const {policyNumber} = useParams();
 
@@ -12,7 +15,7 @@ export default function Policy() {
 
         queryKey: ['policy'],
         queryFn: () =>
-            fetch(`https://insurance-backend-server.fly.dev/policy/${policyNumber}`).then(
+            fetch(`${URI}/policy/${policyNumber}`).then(
             (res) => res.json(),
             ),
 
@@ -22,7 +25,7 @@ export default function Policy() {
 
         queryKey: ['notes'],
         queryFn: () =>
-            fetch(`https://insurance-backend-server.fly.dev/notes/${policyNumber}`).then(
+            fetch(`${URI}/notes/${policyNumber}`).then(
             (res) => res.json(),
             ),
 
