@@ -20,6 +20,7 @@ export default function NewPolicy() {
     const [autoPassenger, setAutoPassenger] = useState(0)
     const [biPd, setBiPd] = useState(0)
 
+    const [vehicle, setVehicle] = useState('')
     const [plateNumber, setPlateNumber] = useState('')
     const [engineNumber, setEngineNumber] = useState('')
     const [chassisNumber, setChassisNumber] = useState('')
@@ -66,6 +67,7 @@ export default function NewPolicy() {
                     agent_id: agentId,
                     policy_number: policyNumber,
                     bill_number: billNumber,
+                    vehicle: vehicle,
                     plate_number: plateNumber,
                     engine_number: engineNumber,
                     chassis_number: chassisNumber,
@@ -187,7 +189,11 @@ export default function NewPolicy() {
                     </label>
                 </div>
                 <div>
-
+                    
+                    <label class="block mb-6 text-sm font-medium text-gray-900 dark:text-white">
+                        Vehicle:
+                        <input type="text" name="plateNumber" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"  onChange={(e) => setVehicle(e.target.value)}/>
+                    </label>
                     <label class="block mb-6 text-sm font-medium text-gray-900 dark:text-white">
                         Plate Number:
                         <input type="text" name="plateNumber" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mb-4"  onChange={(e) => setPlateNumber(e.target.value)}/>
