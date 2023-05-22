@@ -3,17 +3,16 @@ import { useQuery } from '@tanstack/react-query';
 
 import Results from '../results/Results';
 
-const URI = 'http://localhost:8080';
-
 export default function Search() {
     const [searchKey, setSearchKey] = useState('agent_id');
     const [searchInput, setSearchInput] = useState('');
 
+    console.log(process.env.REACT_APP_BACKEND_URI)
     const { isLoading: isLoadingPolicies, error: errorPolicies, data: policies, refetch: refetchPolicies } = useQuery({
 
         queryKey: ['policies'],
         queryFn: () =>
-            fetch(`${URI}/policies/${searchKey}=${searchInput}`).then(
+            fetch(`${process.env.REACT_APP_BACKEND_URI}/policies/${searchKey}=${searchInput}`).then(
             (res) => res.json(),
             ),
         enabled: false,
@@ -24,7 +23,7 @@ export default function Search() {
 
         queryKey: ['agents'],
         queryFn: () =>
-            fetch(`${URI}/agents`).then(
+            fetch(`${process.env.REACT_APP_BACKEND_URI}/agents`).then(
             (res) => res.json(),
             ),
     });
