@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import Results from '../results/Results';
 
+const URI = 'http://localhost:8080';
 
 export default function Search() {
     const [searchKey, setSearchKey] = useState('agent_id');
@@ -12,7 +13,7 @@ export default function Search() {
 
         queryKey: ['policies'],
         queryFn: () =>
-            fetch(`https://insurance-backend-server.fly.dev/policies/${searchKey}=${searchInput}`).then(
+            fetch(`${URI}/policies/${searchKey}=${searchInput}`).then(
             (res) => res.json(),
             ),
         enabled: false,
@@ -23,7 +24,7 @@ export default function Search() {
 
         queryKey: ['agents'],
         queryFn: () =>
-            fetch(`https://insurance-backend-server.fly.dev/agents`).then(
+            fetch(`${URI}/agents`).then(
             (res) => res.json(),
             ),
     });

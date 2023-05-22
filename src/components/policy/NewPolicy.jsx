@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { useQuery } from '@tanstack/react-query';
 
+const URI = 'http://localhost:8080';
 
 export default function NewPolicy() {
     const [ownDamagePremium, setOwnDamagePremium] = useState(0)
@@ -41,12 +42,18 @@ export default function NewPolicy() {
     useEffect(() => {
         let grossPremium = Number(ownDamagePremium) + Number(actsOfNaturePremium) + Number(autoPassengerPremium) + Number(biPremium) + Number(pdPremium)
         setGrossPremium(grossPremium)
-      });
+        let taxes = grossPremium * .247
+        setTaxes(taxes)
+        let totalPremium = taxes + grossPremium
+        setTotalPremium(totalPremium)
+        let balance = totalPremium - paidPremium
+        setBalance(balance)
+    });
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const response = await fetch('https://insurance-backend-server.fly.dev/create_policy', {
+            const response = await fetch(`${URI}/create_policy`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -81,9 +88,15 @@ export default function NewPolicy() {
                     balance: balance
                 })
             })
+
+            if (response.ok) {
+                const result = await response.json();
+                alert(`Success: ${policyNumber} added!`);
+            } else{
+                const result = await response.json();
+                alert(result.error)
+            }
             
-            const result = await response.json();
-            alert(`Success: ${policyNumber} added!`);
         } catch (error) {
             alert(`Please complete the fields`);
             console.error("Error:", error);
@@ -93,7 +106,7 @@ export default function NewPolicy() {
     const { isLoading: isLoadingAgents, error, data: agents, refetch: refetchAgents } = useQuery({
         queryKey: ['agents'],
         queryFn: () =>
-            fetch(`https://insurance-backend-server.fly.dev/agents`).then(
+            fetch(`${URI}/agents`).then(
             (res) => res.json(),
             ),
     });
@@ -195,11 +208,11 @@ export default function NewPolicy() {
                     </label>
                     <label class="block mb-6 text-sm font-medium text-gray-900 dark:text-white">
                         Taxes:
-                        <input type="number" min="0" step="any" name="taxes" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400onChange={} dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                        <input type="number" min="0" step="any" name="taxes" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400onChange={} dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={taxes} />
                     </label>
                     <label class="block mb-6 text-sm font-medium text-gray-900 dark:text-white">
                         Total Premium:
-                        <input type="number" min="0" step="any" name="total_premium" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400onChange={} dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                        <input type="number" min="0" step="any" name="total_premium" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400onChange={} dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={totalPremium} />
                     </label>
                     <label class="block mb-6 text-sm font-medium text-gray-900 dark:text-white">
                         Paid Premium:
@@ -207,7 +220,7 @@ export default function NewPolicy() {
                     </label>
                     <label class="block mb-6 text-sm font-medium text-gray-900 dark:text-white">
                         Balance:
-                        <input type="number" min="0" step="any" name="balance" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400onChange={} dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={(e) => setBalance(e.target.value)}/>
+                        <input type="number" min="0" step="any" name="balance" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400onChange={} dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={balance}/>
                     </label>
                     <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit Policy</button>
                 </div>
